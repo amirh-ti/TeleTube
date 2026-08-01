@@ -5,7 +5,12 @@ from telegram.ext import ContextTypes
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "سلام! لینک یوتیوب رو بفرست تا برات دانلود کنم.\n\n"
-        "--------------------------------"
-        "Hi! Send me the YouTube link so I can download it for you."
-    )
+    "🎬 YouTube Downloader Bot\n"
+    "━━━━━━━━━━━━━━━━━━━━\n"
+    "📥 Send your YouTube link.\n"
+    "📥 لینک یوتیوب خود را ارسال کنید.\n\n"
+    "⚡ Choose your preferred quality.\n"
+    "⚡ کیفیت موردنظر خود را انتخاب کنید.\n\n"
+    "🚀 I'll download and send the file.\n"
+    "🚀 فایل را دانلود کرده و برایتان ارسال می‌کنم."
+)
