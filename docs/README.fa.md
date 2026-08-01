@@ -50,6 +50,28 @@
 
 ---
 
+<details>
+<summary>📸 برای مشاهده اسکرین‌شات ها کلیک کنید</summary>
+
+<br>
+
+<p align="center">
+  <img src="../media/start.jpg" width="280" alt="TeleTube Start Command">
+  <img src="../media/select_qualities.jpg" width="280" alt="Video Quality Selection Menu">
+</p>
+
+<p align="center">
+  <img src="../media/download.jpg" width="280" alt="Video Download Progress">
+  <img src="../media/upload.jpg" width="280" alt="Telegram Upload Progress">
+</p>
+
+<p align="center">
+  <img src="../media/end.jpg" width="280" alt="Completed Video Delivery">
+</p>
+
+</details>
+
+---
 ## 🚀 شروع سریع
 
 ### پیش‌نیازها
