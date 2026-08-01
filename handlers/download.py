@@ -20,8 +20,13 @@ async def handle_url(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     status_msg = await update.message.reply_text(
-    "🔍 در حال بررسی کیفیت‌های موجود... / Checking available qualities..."
-    )
+        "🔍 Checking Video | در حال بررسی ویدیو\n"
+        "━━━━━━━━━━━━━━━━━━━━\n"
+        "🎥 Checking available qualities...\n"
+        "🎥 در حال بررسی کیفیت‌های موجود...\n\n"
+        "⏳ Please wait...\n"
+        "⏳ لطفاً صبر کنید..."
+         )
     
     loop = asyncio.get_running_loop()
     heights, title, error = await loop.run_in_executor(
@@ -51,13 +56,16 @@ async def handle_url(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
     
     await status_msg.edit_text(
-    f"📥 **Title / عنوان:** `{title}`\n\n"
-    f"⚙️ Choose the quality / کیفیت رو انتخاب کن:\n"
-    f"━─━─━─━─━─━─━─━─━\n"
-    f"⏳ If you don't select within {AUTO_SELECT_TIMEOUT} seconds,\n"
-    f"   it will download automatically / اگه تا {AUTO_SELECT_TIMEOUT} ثانیه انتخاب نکنی، خودکار دانلود می‌شه.",
-    reply_markup=InlineKeyboardMarkup(keyboard), 
-    )
+        f"🎬 کیفیت‌های آماده دانلود | Available Qualities\n"
+        f"━━━━━━━━━━━━━━━━━━━━\n"
+        f"📥 عنوان | Title\n"
+        f"`{title}`\n\n"
+        f"👇 کیفیت موردنظر خود را انتخاب کنید.\n"
+        f"👇 Please choose your preferred quality.\n\n"
+        f"⏰ دانلود خودکار پس از `{AUTO_SELECT_TIMEOUT}` ثانیه\n"
+        f"⏰ Auto download in `{AUTO_SELECT_TIMEOUT}` seconds.",
+        reply_markup=InlineKeyboardMarkup(keyboard),
+           )
 
     job_data = {
         "token": token,
