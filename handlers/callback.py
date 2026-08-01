@@ -30,7 +30,7 @@ async def process_download(context, chat_id, message_id, user_id, quality, url):
     dl_status = {"percent": 0}
     dl_stop = asyncio.Event()
     dl_reporter = asyncio.create_task(
-        report_progress(bot, chat_id, message_id, dl_status, f"📥 Downloading {quality}p... / در حال دانلود {quality}p...", dl_stop)
+        report_progress(bot, chat_id, message_id, dl_status, f"⏳ Downloading {quality}p | دانلود {quality}p...", dl_stop)
     )
 
     def hook(d):
