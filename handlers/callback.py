@@ -61,13 +61,17 @@ async def process_download(context, chat_id, message_id, user_id, quality, url):
     await bot.edit_message_text(
         chat_id=chat_id,
         message_id=message_id,
-        text=(
-            f"✅ **Download completed! / دانلود کامل شد!**\n"
-            f"━─━─━─━─━─━─━─━─━\n"
-            f"📥 **Title / عنوان:** `{title}`\n"
-            f"📦 **Size / حجم:** `{size_mb:.1f} MB`\n"
-            f"📤 **Status / وضعیت:** در حال ارسال به کانال... / Sending to channel..."
-        ),
+        text = (
+            f"✅ دانلود با موفقیت انجام شد | Download Completed\n"
+            f"━━━━━━━━━━━━━━━━━━━━\n"
+            f"📥 عنوان | Title\n"
+            f"`{title}`\n\n"
+            f"📦 حجم | Size : `{size_mb:.1f} MB`\n"
+            f"🕒 زمان | Time : `{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`\n"
+            f"━━━━━━━━━━━━━━━━━━━━\n"
+            f"✨ فایل آماده دانلود است.\n"
+            f"✨ Your file has been sent successfully."
+                 ),
     )
 
     try:
@@ -101,7 +105,12 @@ async def process_download(context, chat_id, message_id, user_id, quality, url):
         await bot.edit_message_text(
             chat_id=chat_id,
             message_id=message_id,
-            text="🔄 Forwarding to you... / در حال فوروارد به شما..."
+            text = (
+                 "📤 Forwarding File | در حال ارسال فایل\n"
+                 "━━━━━━━━━━━━━━━━━━━━\n"
+                 "⏳ Please wait...\n"
+                 "⏳ لطفاً صبر کنید..."
+                     )
         )
 
         try:
@@ -113,32 +122,36 @@ async def process_download(context, chat_id, message_id, user_id, quality, url):
             await bot.edit_message_text(
                 chat_id=chat_id,
                 message_id=message_id,
-                text=(
-                    f"✅ **Success! / موفق!**\n"
-                    f"━─━─━─━─━─━─━─━─━\n"
-                    f"📥 **Title / عنوان:** `{title}`\n"
-                    f"📦 **Size / حجم:** `{size_mb:.1f} MB`\n"
-                    f"🕒 **Time / زمان:** `{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`\n"
-                    f"━─━─━─━─━─━─━─━─━\n"
-                    f"✨ File sent successfully! / فایل با موفقیت ارسال شد!"
-                ),
+                text = (
+                     f"🎉 دانلود با موفقیت انجام شد | Download Completed\n"
+                     f"━━━━━━━━━━━━━━━━━━━━\n"
+                     f"📥 عنوان | Title\n"
+                     f"`{title}`\n\n"
+                     f"📦 حجم | Size : `{size_mb:.1f} MB`\n"
+                     f"🕒 زمان | Time : `{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`\n"
+                     f"━━━━━━━━━━━━━━━━━━━━\n"
+                     f"🚀 فایل آماده استفاده است.\n"
+                     f"🚀 Your file is ready."
+                             ),
             )
         except Exception as e:
             await bot.edit_message_text(
                 chat_id=chat_id,
                 message_id=message_id,
-                text=(
-                    f"⚠️ **Partial success / موفقیت نسبی**\n"
-                    f"━─━─━─━─━─━─━─━─━\n"
-                    f"📥 **Title / عنوان:** `{title}`\n"
-                    f"📦 **Size / حجم:** `{size_mb:.1f} MB`\n"
-                    f"━─━─━─━─━─━─━─━─━\n"
-                    f"📤 File uploaded to channel but forward failed.\n"
-                    f"فایل در کانال آپلود شد ولی فوروارد نشد.\n\n"
-                    f"📢 **Download from channel / دانلود از کانال:**\n"
+                text = (
+                    f"⚠️ عملیات با موفقیت نسبی انجام شد | Partial Success\n"
+                    f"━━━━━━━━━━━━━━━━━━━━\n"
+                    f"📥 عنوان | Title\n"
+                    f"`{title}`\n\n"
+                    f"📦 حجم | Size : `{size_mb:.1f} MB`\n"
+                    f"━━━━━━━━━━━━━━━━━━━━\n"
+                    f"📤 فایل در کانال آپلود شد اما فوروارد به کاربر انجام نشد.\n"
+                    f"📤 The file was uploaded to the channel, but forwarding failed.\n\n"
+                    f"📢 لینک دانلود | Download Link\n"
                     f"`{TARGET_CHANNEL}/{channel_msg_id}`\n\n"
-                    f"❌ **Error / خطا:** `{str(e)}`"
-                ),
+                    f"❌ جزئیات خطا | Error Details\n"
+                    f"`{str(e)}`"
+                           ),
             )
     finally:
         schedule_cleanup(context, file_path, thumb_path)
@@ -175,9 +188,14 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
         job.schedule_removal()
 
     await query.edit_message_text(
-        f"📥 Downloading {quality}p... / در حال دانلود {quality}p...\n"
-        f"⏳ Please wait / لطفا صبر کن..."
-    )
+        f"📥 Download Started | دانلود آغاز شد\n"
+        f"━━━━━━━━━━━━━━━━━━━━\n"
+        f"🎯 Quality | کیفیت\n"
+        f"`{quality}p`\n"
+        f"━━━━━━━━━━━━━━━━━━━━\n"
+        f"⏳ Downloading, please wait...\n"
+        f"⏳ در حال دانلود، لطفاً صبر کنید..."
+        )
     await process_download(context, chat_id, message_id, user_id, quality, entry["url"])
 
 
@@ -209,10 +227,14 @@ async def auto_select_callback(context: ContextTypes.DEFAULT_TYPE):
     await context.bot.edit_message_text(
         chat_id=chat_id,
         message_id=message_id,
-        text=(
-            f"⏰ Time is up! Auto-selecting {quality}p...\n"
-            f"زمان تموم شد، خودکار {quality}p دانلود می‌شه...\n"
-            f"⏳ Please wait / لطفا صبر کن..."
-        ),
+        text = (
+            f"⏰ زمان به پایان رسید | Time's up\n"
+            f"━━━━━━━━━━━━━━━━━━━━\n"
+            f"🎯 کیفیت انتخاب‌شده | Selected Quality\n"
+            f"`{quality}p`\n"
+            f"━━━━━━━━━━━━━━━━━━━━\n"
+            f"⏳ دانلود با کیفیت `{quality}p` آغاز شد.\n"
+            f"⏳ Downloading in `{quality}p`..."
+                ),
     )
     await process_download(context, chat_id, message_id, user_id, quality, entry["url"])
