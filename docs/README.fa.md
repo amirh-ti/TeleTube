@@ -112,19 +112,19 @@ AUTO_SELECT_TIMEOUT=15
 
 ```bash
 # روشن کردن سرویس و فعال‌سازی اجرای خودکار هنگام بوت
-systemctl enable --now teletube
+systemctl enable --now TeleTube
 
 # بررسی وضعیت سرویس
-systemctl status teletube
+systemctl status TeleTube
 
 # مشاهده لاگ‌های زنده
-journalctl -u teletube -f
+journalctl -u TeleTube -f
 
 # راه‌اندازی مجدد پس از تغییر تنظیمات
-systemctl restart teletube
+systemctl restart TeleTube
 
 # آپدیت پروژه به آخرین نسخه
-teletube update
+TeleTube update
 ```
 
 ---
