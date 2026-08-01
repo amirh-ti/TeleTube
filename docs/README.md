@@ -115,19 +115,19 @@ Use `systemctl` commands to control and manage the bot in the background:
 
 ```bash
 # Start the service and enable auto-start on boot
-systemctl enable --now teletube
+systemctl enable --now TeleTube
 
 # Check service status
-systemctl status teletube
+systemctl status TeleTube
 
 # View live logs
-journalctl -u teletube -f
+journalctl -u TeleTube -f
 
 # Restart after changing settings
-systemctl restart teletube
+systemctl restart TeleTube
 
 # Update project to the latest version
-teletube update
+TeleTube update
 ```
 
 ---
