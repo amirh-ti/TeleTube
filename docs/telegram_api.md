@@ -1,5 +1,4 @@
 # 🔑 راهنمای دریافت Api_id و Api_hash تلگرام
-
 این متن یه راهنمای کامل و گام‌به‌گام برای دریافت `api_id` و `api_hash` از سایت `my.telegram.org` مخصوص کاربران ایرانی هست.
 
 ---
@@ -21,15 +20,34 @@
 - روی دکمه **Download** کلیک کنید.
 - فایل نصب را اجرا کرده و مراحل را طی کنید.
 - برنامه را باز کرده و کلید **Connect** را بزنید تا روشن شود.
+<details>
+<summary>📸 اسکرین‌شات </summary>
 
-![نصب WARP در ویندوز](../media/telegram_api_cf/cfcw1.png)
+<br>
+
+<p align="center">
+  <img src="../media/telegram_api_cf/cfcw1.PNG" width="280" alt="نصب WARP در ویندوز">
+</p>
+
+</details>
+
+---
 
 #### برای اندروید:
 - اپلیکیشن **1.1.1.1** را از [Google Play](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) دانلود کنید.
 - نصب کرده و باز کنید.
 - کلید **Connect** را بزنید.
 
-![نصب WARP در اندروید](../media/telegram_api_cf/cfcw2.png)
+<details>
+<summary>📸 اسکرین‌شات </summary>
+
+<br>
+
+<p align="center">
+  <img src="../../media/telegram_api_cf/cfcw2.PNG" width="280" alt="نصب WARP در اندروید">
+</p>
+
+</details>
 
 ---
 
