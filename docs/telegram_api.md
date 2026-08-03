@@ -1,48 +1,17 @@
-# 🔑 راهنمای دریافت Api_id و Api_hash تلگرام
-
-این متن یه راهنمای کامل و گام‌به‌گام برای دریافت `api_id` و `api_hash` از سایت `my.telegram.org` مخصوص کاربران ایرانی هست.
-
----
-
-## 📌 چرا این راهنما؟
-
-اگر تا حالا خواسته‌اید ربات تلگرام بسازید یا از API تلگرام استفاده کنید، حتماً می‌دانید که به `api_id` و `api_hash` نیاز دارید. اما به دلیل محدودیت‌های اینترنتی و تحریمی، خیلی از کاربران ایرانی نمی‌توانند به راحتی این اطلاعات را دریافت کنند. این راهنما دقیقاً برای همین مشکل نوشته شده.
-
----
-
-## 🛠 مراحل (گام‌به‌گام)
-
-### 1️⃣ دانلود و نصب Cloudflare WARP
-
-ابتدا باید نرم‌افزار WARP را نصب کنید تا بتوانید بدون وی‌پی‌ان و با آیپی ایران به سایت دسترسی داشته باشید.
-
-#### برای ویندوز:
-- به سایت [cloudflarewarp.com](https://cloudflarewarp.com) بروید.
-- روی دکمه **Download** کلیک کنید.
-- فایل نصب را اجرا کرده و مراحل را طی کنید.
-- برنامه را باز کرده و کلید **Connect** را بزنید تا روشن شود.
-
-#### برای اندروید:
-- اپلیکیشن **1.1.1.1** را از [Google Play](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) دانلود کنید.
-- نصب کرده و باز کنید.
-- کلید **Connect** را بزنید.
-
-### 2️⃣ باز کردن سایت my.telegram.org
-
-مرورگر خود را باز کنید و آدرس زیر را وارد کنید:
-https://my.telegram.org
 
 > اگر سایت باز نشد، مطمئن شوید WARP روشن است.
+
+![صفحه اصلی my.telegram.org](../media/telegram_api_cf/cfcw3.png)
 
 ---
 
 ### 3️⃣ وارد کردن شماره تلفن
 
-.
-- شماره موبایل خود را **به همراه کد کشور** وارد کنید (مثلاً `+989121234567`).
+- کد کشور `+98` (ایران) رو انتخاب کنید.
+- شماره موبایل خود را **بدون صفر اول** وارد کنید (مثلاً `9121234567`).
 - روی دکمه **Next** کلیک کنید.
 
-![وارد کردن شماره](images/enter-phone.png)
+![وارد کردن شماره تلفن](../media/telegram_api_cf/cfcw4.png)
 
 ---
 
@@ -51,7 +20,7 @@ https://my.telegram.org
 - یک کد ۵ رقمی به تلگرام شما پیامک خواهد شد.
 - کد را در صفحه وارد کرده و روی **Sign In** کلیک کنید.
 
-![وارد کردن کد تایید](images/enter-code.png)
+![وارد کردن کد تایید](../media/telegram_api_cf/cfcw5.png)
 
 ---
 
@@ -59,7 +28,7 @@ https://my.telegram.org
 
 پس از ورود، روی لینک **API development tools** کلیک کنید.
 
-![API development tools](images/api-tools.png)
+![API development tools](../media/telegram_api_cf/cfcw6.png)
 
 ---
 
@@ -72,7 +41,7 @@ https://my.telegram.org
   - `Description`: توضیحات (اختیاری)
 - روی **Create application** کلیک کنید.
 
-![ساخت اپلیکیشن](images/create-app.png)
+![ساخت اپلیکیشن جدید](../media/telegram_api_cf/cfcw7.png)
 
 ---
 
@@ -85,7 +54,7 @@ https://my.telegram.org
 
 این اطلاعات را در جای امنی ذخیره کنید.
 
-![دریافت api_id و api_hash](images/api-keys.png)
+![دریافت api_id و api_hash](../media/telegram_api_cf/cfcw8.png)
 
 ---
 
@@ -95,6 +64,8 @@ https://my.telegram.org
 
 - در ویندوز: کلید **Disconnect** را بزنید.
 - در اندروید: کلید **Disconnect** را بزنید.
+
+![خاموش کردن WARP](../media/telegram_api_cf/cfcw9.png)
 
 ---
 
@@ -139,6 +110,5 @@ https://my.telegram.org
 اگر پیشنهادی برای بهبود این راهنما دارید، خوشحال میشیم که Pull Request بدید یا Issue ثبت کنید.
 
 ---
-
 
 **موفق باشید! 🚀**
