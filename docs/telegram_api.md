@@ -26,7 +26,7 @@
 <br>
 
 <p align="center">
-  <img src="../media/telegram_api_cf/cfcw1.PNG" width="280" alt="نصب WARP در ویندوز">
+  <img src="../media/telegram_api_cf/cfc_w.PNG" width="280" alt="نصب WARP در ویندوز">
 </p>
 
 </details>
