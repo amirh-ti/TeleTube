@@ -26,7 +26,7 @@
 <br>
 
 <p align="center">
-  <img src="../media/telegram_api_cf/cfc_w.PNG" width="280" alt="نصب WARP در ویندوز">
+  <img src="../media/telegram_api_cf/cfc_w.PNG" width="280" alt="screenshot">
 </p>
 
 </details>
@@ -44,7 +44,7 @@
 <br>
 
 <p align="center">
-  <img src="../../media/telegram_api_cf/cfcw2.PNG" width="280" alt="نصب WARP در اندروید">
+  <img src="../../media/telegram_api_cf/cfcw2.PNG" width="280" alt="screenshot">
 </p>
 
 </details>
@@ -57,7 +57,6 @@
 
 > اگر سایت باز نشد، مطمئن شوید WARP روشن است.
 
-![صفحه اصلی my.telegram.org](../media/telegram_api_cf/cfcw3.png)
 
 ---
 
@@ -66,8 +65,16 @@
 - کد کشور `+98` (ایران) رو انتخاب کنید.
 - شماره موبایل خود را **بدون صفر اول** وارد کنید (مثلاً `9121234567`).
 - روی دکمه **Next** کلیک کنید.
+<details>
+<summary>📸 اسکرین‌شات </summary>
 
-![وارد کردن شماره تلفن](../media/telegram_api_cf/cfcw4.png)
+<br>
+
+<p align="center">
+  <img src="../media/telegram_api_cf/tel_login.PNG" width="840" alt="screenshot">
+</p>
+
+</details>
 
 ---
 
@@ -84,7 +91,17 @@
 
 پس از ورود، روی لینک **API development tools** کلیک کنید.
 
-![API development tools](../media/telegram_api_cf/cfcw6.png)
+<details>
+<summary>📸 اسکرین‌شات </summary>
+
+<br>
+
+<p align="center">
+  <img src="../media/telegram_api_cf/tel_main.PNG" width="840" alt="screenshot">
+</p>
+
+</details>
+
 
 ---
 
@@ -96,8 +113,16 @@
   - `Short name`: یک نام کوتاه (مثلاً `mybot`)
   - `Description`: توضیحات (اختیاری)
 - روی **Create application** کلیک کنید.
+<details>
+<summary>📸 اسکرین‌شات </summary>
 
-![ساخت اپلیکیشن جدید](../media/telegram_api_cf/cfcw7.png)
+<br>
+
+<p align="center">
+  <img src="../media/telegram_api_cf/tel_create_api.PNG" width="840" alt="screenshot">
+</p>
+
+</details>
 
 ---
 
