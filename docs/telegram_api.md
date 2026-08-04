@@ -82,8 +82,16 @@
 
 - یک کد ۵ رقمی به تلگرام شما پیامک خواهد شد.
 - کد را در صفحه وارد کرده و روی **Sign In** کلیک کنید.
+<details>
+<summary>📸 اسکرین‌شات </summary>
 
-![وارد کردن کد تایید](../media/telegram_api_cf/cfcw5.png)
+<br>
+
+<p align="center">
+  <img src="../media/telegram_api_cf/tel_code.jpg" width="280" alt="screenshot">
+</p>
+
+</details>
 
 ---
 
@@ -134,8 +142,16 @@
 - **App api_hash**: یک رشته طولانی (مثلاً `a1b2c3d4e5f6...`)
 
 این اطلاعات را در جای امنی ذخیره کنید.
+<details>
+<summary>📸 اسکرین‌شات </summary>
 
-![دریافت api_id و api_hash](../media/telegram_api_cf/cfcw8.png)
+<br>
+
+<p align="center">
+  <img src="../media/telegram_api_cf/tel_api_id_hash.jpg" width="560" alt="screenshot">
+</p>
+
+</details>
 
 ---
 
@@ -145,8 +161,6 @@
 
 - در ویندوز: کلید **Disconnect** را بزنید.
 - در اندروید: کلید **Disconnect** را بزنید.
-
-![خاموش کردن WARP](../media/telegram_api_cf/cfcw9.png)
 
 ---
 
