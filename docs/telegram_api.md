@@ -26,7 +26,11 @@
 <br>
 
 <p align="center">
-  <img src="../media/telegram_api_cf/cfc_w.PNG" width="280" alt="screenshot">
+  <img src="../media/telegram_api_cf/cfc_w1.PNG" width="280" alt="screenshot">
+</p>
+
+<p align="center">
+  <img src="../media/telegram_api_cf/cfc_w2.PNG" width="280" alt="screenshot">
 </p>
 
 </details>
