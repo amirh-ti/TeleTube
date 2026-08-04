@@ -125,13 +125,23 @@ AUTO_SELECT_TIMEOUT=15
 
 ---
 
-> 💡 **Note:** If you do not have a `SESSION_STRING`, you can obtain it from Telegram by running the following prepared script:
+## 🔑 Prerequisites
+
+To use this project, you need Telegram **API ID** and **API Hash**.
+
+Don't have them? No worries! A complete step-by-step guide for obtaining them is available in the file below:
+
+📘 **[Guide to Getting API ID and API Hash](docs/telegram_api_en.md)**
+
+Make sure to read this file before running the project.
+
+---
+
+> 💡 **Note:** If you don't have a `SESSION_STRING`, you can generate it by running the ready-made script below (after installing TeleTube):
 > ```bash
-> # After install teletube
 > cd /opt/TeleTube/
 > python3 utils/sess_st.py
 > ```
-
 ## 🛠️ Service Management
 
 Use `systemctl` commands to control and manage the bot in the background:
