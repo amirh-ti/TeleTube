@@ -24,6 +24,17 @@ Open your browser and enter the following address:
 - Enter your mobile number **without the zero, including the country code** (e.g., `+989121234567`)
 - Click the **Next** button
 
+<details>
+<summary>📸 screenshot </summary>
+
+<br>
+
+<p align="center">
+  <img src="../media/telegram_api_cf/tel_login.PNG" width="840" alt="screenshot">
+</p>
+
+</details>
+
 ---
 
 ### 3️⃣ Receive and Enter the Verification Code
@@ -31,11 +42,33 @@ Open your browser and enter the following address:
 - A 5-digit code will be sent to your Telegram
 - Enter the code on the page and click **Sign In**
 
+<details>
+<summary>📸 screenshot </summary>
+
+<br>
+
+<p align="center">
+  <img src="../media/telegram_api_cf/tel_code.jpg" width="280" alt="screenshot">
+</p>
+
+</details>
+
 ---
 
 ### 4️⃣ Go to the API Creation Section
 
 After logging in, click on the **API development tools** link.
+
+<details>
+<summary>📸 screenshot </summary>
+
+<br>
+
+<p align="center">
+  <img src="../media/telegram_api_cf/tel_main.PNG" width="840" alt="screenshot">
+</p>
+
+</details>
 
 ---
 
@@ -48,6 +81,17 @@ After logging in, click on the **API development tools** link.
   - `Description`: Description (optional)
 - Click **Create application**
 
+<details>
+<summary>📸 screenshot </summary>
+
+<br>
+
+<p align="center">
+  <img src="../media/telegram_api_cf/tel_create_api.PNG" width="840" alt="screenshot">
+</p>
+
+</details>
+
 ---
 
 ### 6️⃣ Get Api_id and Api_hash
@@ -58,6 +102,18 @@ Now you will see the following information:
 - **App api_hash**: A long string (e.g., `a1b2c3d4e5f6...`)
 
 Save this information in a safe place.
+
+<details>
+<summary>📸 screenshot </summary>
+
+<br>
+
+<p align="center">
+  <img src="../media/telegram_api_cf/tel_api_id_hash.jpg" width="560" alt="screenshot">
+</p>
+
+</details>
+
 
 ---
 
