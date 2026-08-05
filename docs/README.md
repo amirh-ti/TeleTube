@@ -131,7 +131,7 @@ To use this project, you need Telegram **API ID** and **API Hash**.
 
 Don't have them? No worries! A complete step-by-step guide for obtaining them is available in the file below:
 
-📘 **[Guide to Getting API ID and API Hash](docs/telegram_api_en.md)**
+📘 **[Guide to Getting API ID and API Hash](telegram_api_en.md)**
 
 Make sure to read this file before running the project.
 
