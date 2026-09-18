@@ -234,7 +234,7 @@ TeleTube/
 
 ## 🗺️ Roadmap
 
-- [ ] **Display estimated file size:** Adding video size next to quality buttons (e.g., `1080p • ~145 MB`).
+- [x] **Display estimated file size:** Adding video size next to quality buttons (e.g., `1080p • ~145 MB`).
 - [ ] **Playlist support:** Full batch downloading of YouTube playlists.
 - [ ] **Support for other platforms:** Adding Instagram, TikTok, and Twitter.
 - [ ] **Containerization:** Providing ready `Docker` and `Docker Compose` files.
