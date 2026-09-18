@@ -140,6 +140,7 @@ Make sure to read this file before running the project.
 > 💡 **Note:** If you don't have a `SESSION_STRING`, you can generate it by running the ready-made script below (after installing TeleTube):
 > ```bash
 > cd /opt/TeleTube/
+> pip install telethon
 > python3 utils/sess_st.py
 > ```
 ## 🛠️ Service Management
