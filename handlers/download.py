@@ -8,39 +8,28 @@ from telegram.ext import ContextTypes
 from config import AUTO_SELECT_TIMEOUT
 from core.qualities import fetch_available_qualities, filter_standard_qualities
 from utils.validators import is_valid_youtube_url
+from utils.helpers import format_size
 from handlers.callback import auto_select_callback
 
 
 async def handle_url(update: Update, context: ContextTypes.DEFAULT_TYPE):
     url = update.message.text.strip()
     if not is_valid_youtube_url(url):
-        await update.message.reply_text(
-        "❌ لینک معتبر نیست! / Invalid link!"
-        )
+        await update.message.reply_text("لینک معتبر نیست!")
         return
 
-    status_msg = await update.message.reply_text(
-        "🔍 Checking Video | در حال بررسی ویدیو\n"
-        "━━━━━━━━━━━━━━━━━━━━\n"
-        "🎥 Checking available qualities...\n"
-        "🎥 در حال بررسی کیفیت‌های موجود...\n\n"
-        "⏳ Please wait...\n"
-        "⏳ لطفاً صبر کنید..."
-         )
-    
+    status_msg = await update.message.reply_text("در حال بررسی کیفیت‌های موجود...")
+
     loop = asyncio.get_running_loop()
-    heights, title, error = await loop.run_in_executor(
+    heights_info, title, error = await loop.run_in_executor(
         None, lambda: fetch_available_qualities(url)
     )
 
     if error:
-        await status_msg.edit_text(
-         f"❌ خطا در گرفتن اطلاعات ویدیو / Error fetching video info:\n"
-         f"`{error}`"
-        )
+        await status_msg.edit_text(f"خطا در گرفتن اطلاعات ویدیو: {error}")
         return
 
-    offered = filter_standard_qualities(heights)
+    offered = filter_standard_qualities(heights_info)
 
     # توکن کوتاه چون callback_data تلگرام محدود به ۶۴ بایته و لینک یوتیوب
     # ممکنه از این حد رد بشه
@@ -50,22 +39,16 @@ async def handle_url(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if len(pending) > 50:
         pending.pop(next(iter(pending)), None)
 
-    keyboard = [
-        [InlineKeyboardButton(f"{h}p", callback_data=f"dl|{h}|{token}")]
-        for h in offered
-    ]
-    
+    keyboard = []
+    for h in offered:
+        size_str = format_size(heights_info.get(h))
+        label = f"{h}p" + (f" (~{size_str})" if size_str else "")
+        keyboard.append([InlineKeyboardButton(label, callback_data=f"dl|{h}|{token}")])
     await status_msg.edit_text(
-        f"🎬 کیفیت‌های آماده دانلود | Available Qualities\n"
-        f"━━━━━━━━━━━━━━━━━━━━\n"
-        f"📥 عنوان | Title\n"
-        f"`{title}`\n\n"
-        f"👇 کیفیت موردنظر خود را انتخاب کنید.\n"
-        f"👇 Please choose your preferred quality.\n\n"
-        f"⏰ دانلود خودکار پس از `{AUTO_SELECT_TIMEOUT}` ثانیه\n"
-        f"⏰ Auto download in `{AUTO_SELECT_TIMEOUT}` seconds.",
+        f"«{title}»\nکیفیت رو انتخاب کن "
+        f"(اگه تا {AUTO_SELECT_TIMEOUT} ثانیه انتخاب نکنی، خودکار دانلود می‌شه):",
         reply_markup=InlineKeyboardMarkup(keyboard),
-           )
+    )
 
     job_data = {
         "token": token,
