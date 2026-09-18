@@ -137,6 +137,7 @@ AUTO_SELECT_TIMEOUT=15
 > 💡 **نکته:** اگر API ID و API Hash تلگرام رو دارید اما `SESSION_STRING` ندارید، می‌توانید با اجرای اسکریپت آماده‌ی زیر آن را از تلگرام دریافت کنید (البته بعد از نصب تله‌توب):
 > ```bash
 > cd /opt/TeleTube/
+> pip install telethon
 > python3 utils/sess_st.py
 > ```
 ## 🛠️ مدیریت سرویس
