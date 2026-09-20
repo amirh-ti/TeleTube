@@ -67,8 +67,13 @@ def download_video(url, quality, progress_hook=None):
     if shutil.which("aria2c"):
         ydl_opts["external_downloader"] = "aria2c"
         ydl_opts["external_downloader_args"] = {
-            "aria2c": ["-x", "16", "-s", "16", "-k", "1M"]
-        }
+          "aria2c": [
+          "-x", "16", "-s", "16", "-k", "1M",
+          "--lowest-speed-limit=50K",
+          "--max-tries=5",
+          "--retry-wait=2",
+          "--timeout=30",   ]
+         }
 
     # --- Download / دانلود ---
     try:
