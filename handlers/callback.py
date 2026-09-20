@@ -5,13 +5,20 @@ download → upload → forward → cleanup.
 """
 
 import os
+import time
 import asyncio
 from datetime import datetime
 
 from telegram import Update
 from telegram.ext import ContextTypes
 
-from config import TARGET_CHANNEL, TARGET_CHANNEL_USERNAME, AUTO_SELECT_PRIORITY
+from config import (
+    TARGET_CHANNEL,
+    TARGET_CHANNEL_USERNAME,
+    AUTO_SELECT_PRIORITY,
+    ADMIN_CHAT_ID,
+    COOKIE_ALERT_COOLDOWN,
+)
 from core.downloader import download_video
 from core.uploader import send_to_channel
 from core.cleanup import schedule_cleanup
@@ -43,12 +50,25 @@ async def process_download(context, chat_id, message_id, user_id, quality, url):
             dl_status["percent"] = 100
 
     try:
-        file_path, title, thumb_path, msg = await loop.run_in_executor(
+        file_path, title, thumb_path, msg, cookie_expired = await loop.run_in_executor(
             None, lambda: download_video(url, quality, progress_hook=hook)
         )
     finally:
         dl_stop.set()
         dl_reporter.cancel()
+
+    if cookie_expired and ADMIN_CHAT_ID:
+        now = time.time()
+        last_alert = context.bot_data.get("last_cookie_alert", 0)
+        if now - last_alert >= COOKIE_ALERT_COOLDOWN:
+            context.bot_data["last_cookie_alert"] = now
+            try:
+                await bot.send_message(
+                    chat_id=ADMIN_CHAT_ID,
+                    text="⚠️ کوکی یوتیوب منقضی شده! لطفاً cookies.txt رو دوباره export کن.",
+                )
+            except Exception:
+                pass
 
     if not file_path:
         await bot.edit_message_text(chat_id=chat_id, message_id=message_id, text=msg)
