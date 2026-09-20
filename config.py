@@ -21,6 +21,7 @@ TARGET_CHANNEL = os.environ.get("TARGET_CHANNEL", "https://t.me/channel-id")
 TARGET_CHANNEL_USERNAME = os.environ.get("TARGET_CHANNEL_USERNAME", "@channel-id")
 DOWNLOAD_DIR = os.environ.get("DOWNLOAD_DIR", "/app/data/downloads")
 COOKIES_FILE = os.environ.get("COOKIES_FILE", "/app/data/cookies.txt")
+ADMIN_CHAT_ID = int(os.environ.get("ADMIN_CHAT_ID", "0") or "0")
 
 # روی پلتفرم‌هایی مثل Railway که آپلود مستقیم فایل نداری، می‌تونی محتوای
 # cookies.txt رو base64 کنی و در متغیر محیطی COOKIES_B64 بذاری؛ همون اول اجرا
@@ -46,10 +47,6 @@ AUTO_SELECT_TIMEOUT = 30
 
 # ترتیب اولویت برای انتخاب خودکار کیفیت (اولین موردی که موجود باشه انتخاب می‌شه)
 AUTO_SELECT_PRIORITY = [480, 360, 240, 720, 144, 1080]
-
-# چت‌آیدی ادمین برای دریافت هشدار «کوکی منقضی شده». اگه خالی بمونه، هشدار
-# فرستاده نمی‌شه. با @userinfobot می‌تونی چت‌آیدی خودت رو بگیری.
-ADMIN_CHAT_ID = int(os.environ.get("ADMIN_CHAT_ID", "0") or "0")
 
 # حداقل فاصله (ثانیه) بین دو هشدار کوکی منقضی، تا اسپم نشه. پیش‌فرض یک ساعت.
 COOKIE_ALERT_COOLDOWN = int(os.environ.get("COOKIE_ALERT_COOLDOWN", "43200") or "43200")
