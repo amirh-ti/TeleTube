@@ -1,34 +1,6 @@
-# Python
-__pycache__/
-*.py[cod]
-*.egg-info/
-venv/
-TeleTube/
-env/
-
-# Environment / Secrets
 .env
-*.env
-config.py
-secrets.py
-
-# YouTube downloads
-youtube_memory/
-*.mp4
-*.m4a
-*.webm
-*.part
-
-# Logs
-*.log
-logs/
-
-# Telegram sessions (خیلی مهم!)
+venv/
+__pycache__/
+*.pyc
+data/
 *.session
-*.session-journal
-sess_*.st
-
-# OS / IDE
-.DS_Store
-.vscode/
-.idea/
