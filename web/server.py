@@ -18,13 +18,17 @@ FAILED_ATTEMPTS = {}
 
 @app.get("/logo.svg")
 async def get_custom_logo():
-    """مسیر خواندن لوگوی اختصاصی کاربر از پوشه مدیا"""
-    logo_path = "media/logo.svg"
+    """مسیر خواندن لوگوی اختصاصی کاربر با مسیردهی مطلق"""
+    import os
+    # پیدا کردن مسیر روت پروژه بر اساس محل فایل server.py
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(file)))
+    logo_path = os.path.join(base_dir, "media", "logo.svg")
+    
     if os.path.exists(logo_path):
         return FileResponse(logo_path, media_type="image/svg+xml")
-    # در صورتی که فایل پیدا نشد یک پاسخ خالی برمی‌گرداند تا ارور ندهد
+    
     return Response(content=b"", media_type="image/svg+xml")
-
+    
 @app.get("/login", response_class=HTMLResponse)
 async def login_page(request: Request, error: str = None, mins: str = None):
     error_msg = ""
