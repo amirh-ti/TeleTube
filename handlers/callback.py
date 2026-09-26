@@ -5,17 +5,29 @@ download → upload → forward → cleanup.
 """
 
 import os
+import time
 import asyncio
 from datetime import datetime
 
 from telegram import Update
 from telegram.ext import ContextTypes
 
-from config import TARGET_CHANNEL, TARGET_CHANNEL_USERNAME, AUTO_SELECT_PRIORITY
+from config import (
+    TARGET_CHANNEL,
+    TARGET_CHANNEL_USERNAME,
+    AUTO_SELECT_PRIORITY,
+    ADMIN_CHAT_ID,
+    COOKIE_ALERT_COOLDOWN,
+    PUBLIC_BASE_URL,
+    LINK_TTL_HOURS,
+)
 from core.downloader import download_video
 from core.uploader import send_to_channel
 from core.cleanup import schedule_cleanup
 from handlers.progress import report_progress
+from utils.helpers import make_nimbaha_link, make_urldl_link
+from web import store as link_store
+from web.settings import get_settings
 
 
 async def process_download(context, chat_id, message_id, user_id, quality, url):
@@ -43,12 +55,25 @@ async def process_download(context, chat_id, message_id, user_id, quality, url):
             dl_status["percent"] = 100
 
     try:
-        file_path, title, thumb_path, msg = await loop.run_in_executor(
+        file_path, title, thumb_path, msg, cookie_expired = await loop.run_in_executor(
             None, lambda: download_video(url, quality, progress_hook=hook)
         )
     finally:
         dl_stop.set()
         dl_reporter.cancel()
+
+    if cookie_expired and ADMIN_CHAT_ID:
+        now = time.time()
+        last_alert = context.bot_data.get("last_cookie_alert", 0)
+        if now - last_alert >= COOKIE_ALERT_COOLDOWN:
+            context.bot_data["last_cookie_alert"] = now
+            try:
+                await bot.send_message(
+                    chat_id=ADMIN_CHAT_ID,
+                    text="⚠️ کوکی یوتیوب منقضی شده! لطفاً cookies.txt رو دوباره export کن.",
+                )
+            except Exception:
+                pass
 
     if not file_path:
         await bot.edit_message_text(chat_id=chat_id, message_id=message_id, text=msg)
@@ -57,7 +82,40 @@ async def process_download(context, chat_id, message_id, user_id, quality, url):
     file_size = os.path.getsize(file_path)
     size_mb = file_size / (1024 * 1024)
 
+    # --- تصمیم‌گیری بر اساس تنظیمات پنل: لینک مستقیم بسازیم؟ به کانال هم ارسال کنیم؟ ---
+    settings = get_settings()
+    enable_direct = settings.get("enable_direct_links", True)
+    enable_channel = settings.get("enable_channel_delivery", True)
+    if not enable_direct and not enable_channel:
+        enable_channel = True  # همیشه حداقل یک مسیر تحویل فعال بمونه
+
+    direct_link = None
+    if enable_direct and PUBLIC_BASE_URL:
+        entry = link_store.create_link(file_path, title, file_size)
+        direct_link = f"{PUBLIC_BASE_URL}/files/{entry['token']}"
+
+    nimbaha_link = None
+    urldl_link = None
+    if direct_link and settings.get("enable_nimbaha"):
+        nimbaha_link = make_nimbaha_link(direct_link, f"{title}.mp4")
+    if direct_link and settings.get("enable_urldl"):
+        # make_urldl_link با requests کار می‌کنه (blocking)، پس حتما توی
+        # executor صداش می‌زنیم تا event loop اصلی بات قفل نشه.
+        urldl_link = await loop.run_in_executor(None, lambda: make_urldl_link(direct_link))
+
+    def _extra_links_block():
+        lines = []
+        if nimbaha_link:
+            lines.append(f"💰 لینک نیم‌بها (nimbaha) | Half-price link:\n{nimbaha_link}")
+        if urldl_link:
+            lines.append(f"💰 لینک نیم‌بها (urldl) | Half-price link:\n{urldl_link}")
+        return ("\n\n".join(lines) + "\n\n") if lines else ""
+
     # --- Download complete / دانلود کامل شد ---
+    next_step_text = (
+        "📤 در حال ارسال به کانال...\n📤 Uploading to channel..." if enable_channel
+        else "🔗 لینک مستقیم آماده شد.\n🔗 Direct link is ready."
+    )
     await bot.edit_message_text(
         chat_id=chat_id,
         message_id=message_id,
@@ -69,10 +127,32 @@ async def process_download(context, chat_id, message_id, user_id, quality, url):
             f"📦 حجم | Size : `{size_mb:.1f} MB`\n"
             f"🕒 زمان | Time : `{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`\n"
             f"━━━━━━━━━━━━━━━━━━━━\n"
-            f"✨ فایل آماده دانلود است.\n"
-            f"✨ Your file has been sent successfully."
+            f"{next_step_text}"
                  ),
     )
+
+    if not enable_channel:
+        # فقط لینک مستقیم — بدون آپلود به کانال/فوروارد
+        final_text = (
+            f"🎉 فایل آماده شد | File Ready\n"
+            f"━━━━━━━━━━━━━━━━━━━━\n"
+            f"📥 عنوان | Title\n"
+            f"`{title}`\n\n"
+            f"📦 حجم | Size : `{size_mb:.1f} MB`\n"
+            f"━━━━━━━━━━━━━━━━━━━━\n"
+        )
+        if direct_link:
+            final_text += (
+                f"🔗 لینک مستقیم (تا {LINK_TTL_HOURS} ساعت معتبره) | Direct link (valid for {LINK_TTL_HOURS}h)\n"
+                f"{direct_link}\n\n"
+                f"{_extra_links_block()}"
+            ).rstrip()
+        else:
+            final_text += "⚠️ لینک مستقیم ساخته نشد (PUBLIC_BASE_URL ست نشده)."
+        await bot.edit_message_text(chat_id=chat_id, message_id=message_id, text=final_text)
+        # اگه لینک ساخته شده، فایل نباید الان پاک بشه — پاکسازی رو به TTL خودش می‌سپریم
+        schedule_cleanup(context, None if direct_link else file_path, None if direct_link else thumb_path)
+        return
 
     try:
         # --- Upload phase with live progress / مرحله آپلود با گزارش پیشرفت زنده ---
@@ -119,6 +199,12 @@ async def process_download(context, chat_id, message_id, user_id, quality, url):
                 from_chat_id=TARGET_CHANNEL_USERNAME,
                 message_id=channel_msg_id,
             )
+            link_line = ""
+            if direct_link:
+                link_line = (
+                    f"\n🔗 لینک مستقیم (تا {LINK_TTL_HOURS} ساعت) | Direct link ({LINK_TTL_HOURS}h): {direct_link}\n\n"
+                    f"{_extra_links_block()}"
+                )
             await bot.edit_message_text(
                 chat_id=chat_id,
                 message_id=message_id,
@@ -130,10 +216,17 @@ async def process_download(context, chat_id, message_id, user_id, quality, url):
                      f"📦 حجم | Size : `{size_mb:.1f} MB`\n"
                      f"🕒 زمان | Time : `{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`\n"
                      f"━━━━━━━━━━━━━━━━━━━━\n"
+                     f"{link_line}"
                      f"🚀 فایل آماده استفاده است.\n"
                      f"🚀 Your file is ready."
                              ),
             )
+        
+            if direct_link:
+                tg_url = f"{TARGET_CHANNEL}/{channel_msg_id}" if channel_msg_id else None
+                link_store.update_link_extras(entry['token'], thumb_path, urldl_link, tg_url)
+
+        
         except Exception as e:
             await bot.edit_message_text(
                 chat_id=chat_id,
@@ -153,8 +246,12 @@ async def process_download(context, chat_id, message_id, user_id, quality, url):
                     f"`{str(e)}`"
                            ),
             )
+            
+             
     finally:
-        schedule_cleanup(context, file_path, thumb_path)
+        # اگه لینک مستقیم ساخته شده، فایل رو الان پاک نکن — تا TTL خودش زنده
+        # می‌مونه (پاکسازی دوره‌ای توی bot.py انجامش می‌ده).
+        schedule_cleanup(context, None if direct_link else file_path, None if direct_link else thumb_path)
 
 
 async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):

@@ -26,5 +26,8 @@ RUN mkdir -p /app/data
 ENV DOWNLOAD_DIR="/app/data/downloads"
 ENV COOKIES_FILE="/app/data/cookies.txt"
 
+# پورت وب‌سرور (لینک مستقیم + پنل مدیریت). Railway خودش از env var PORT
+# استفاده می‌کنه؛ این EXPOSE فقط جنبه‌ی مستندسازیه.
+EXPOSE 8080
 
 CMD ["python3", "bot.py"]

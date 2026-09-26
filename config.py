@@ -47,6 +47,40 @@ AUTO_SELECT_TIMEOUT = 30
 # ترتیب اولویت برای انتخاب خودکار کیفیت (اولین موردی که موجود باشه انتخاب می‌شه)
 AUTO_SELECT_PRIORITY = [480, 360, 240, 720, 144, 1080]
 
+# چت‌آیدی ادمین برای دریافت هشدار «کوکی منقضی شده». اگه خالی بمونه، هشدار
+# فرستاده نمی‌شه. با @userinfobot می‌تونی چت‌آیدی خودت رو بگیری.
+ADMIN_CHAT_ID = int(os.environ.get("ADMIN_CHAT_ID", "0") or "0")
+
+# حداقل فاصله (ثانیه) بین دو هشدار کوکی منقضی، تا اسپم نشه. پیش‌فرض یک ساعت.
+COOKIE_ALERT_COOLDOWN = int(os.environ.get("COOKIE_ALERT_COOLDOWN", "3600") or "3600")
+
+# --- وب‌سرور، لینک مستقیم، و پنل مدیریت ---
+# پورتی که وب‌سرور روش بالا میاد. Railway خودش PORT رو ست می‌کنه؛ روی VPS
+# پیش‌فرض ۸۰۸۰ هست، هر چیزی خواستی توی .env عوضش کن.
+PORT = int(os.environ.get("PORT", "8080") or "8080")
+
+# آدرس عمومی که کاربرها باهاش به وب‌سرور دسترسی دارن، بدون اسلش آخر.
+# روی Railway: همون دامنه‌ای که از "Generate Domain" می‌گیری (https://xxx.up.railway.app)
+# روی VPS: مثلا http://IP:8080 یا دامنه‌ی خودت اگه ریورس‌پروکسی زدی.
+# اگه خالی بمونه، تولید لینک مستقیم غیرفعال می‌مونه (فقط آپلود به کانال کار می‌کنه).
+PUBLIC_BASE_URL = os.environ.get("PUBLIC_BASE_URL", "").rstrip("/")
+
+# لینک‌های مستقیم بعد از چند ساعت منقضی و فایلشون پاک می‌شه.
+LINK_TTL_HOURS = int(os.environ.get("LINK_TTL_HOURS", "24") or "24")
+
+# یوزرنیم/پسورد ورود به پنل مدیریت (/admin). اگه پسورد خالی بمونه، پنل با
+# خطای 503 غیرفعال می‌مونه — یعنی حتما قبل از استفاده باید ستش کنی.
+ADMIN_PANEL_USERNAME = os.environ.get("ADMIN_PANEL_USERNAME", "admin")
+ADMIN_PANEL_PASSWORD = os.environ.get("ADMIN_PANEL_PASSWORD", "")
+
+# مسیر ذخیره‌ی متادیتای لینک‌ها و تنظیمات runtime پنل (فایل JSON ساده، نیازی
+# به دیتابیس جدا نیست).
+LINKS_DB_PATH = os.environ.get("LINKS_DB_PATH", "/app/data/links.json")
+SETTINGS_PATH = os.environ.get("SETTINGS_PATH", "/app/data/settings.json")
+
+os.makedirs(os.path.dirname(LINKS_DB_PATH) or ".", exist_ok=True)
+os.makedirs(os.path.dirname(SETTINGS_PATH) or ".", exist_ok=True)
+
 
 def validate_config():
     """چک می‌کنه همه‌ی مقادیر حساس ست شده باشن؛ در غیر این‌صورت خطای واضح می‌ده."""

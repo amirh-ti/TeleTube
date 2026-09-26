@@ -14,19 +14,42 @@ from utils.helpers import extract_video_id, sanitize_filename
 from core.thumbnail import prepare_thumbnail
 
 
+class _CookieWarningLogger:
+    """warningهای yt-dlp رو می‌گیره تا ببینیم کوکی expire شده یا نه."""
+
+    def __init__(self):
+        self.cookie_expired = False
+
+    def debug(self, msg):
+        pass
+
+    def info(self, msg):
+        pass
+
+    def warning(self, msg):
+        if "cookies are no longer valid" in msg or "Sign in to confirm" in msg:
+            self.cookie_expired = True
+
+    def error(self, msg):
+        pass
+
+
 def download_video(url, quality, progress_hook=None):
     """
     Download video with selected quality / ویدیو رو با کیفیت انتخابی دانلود می‌کنه.
     
     Returns / خروجی:
-        (file_path, title, thumb_path, message)
+        (file_path, title, thumb_path, message, cookie_expired)
         If download fails / اگه دانلود fail بشه:
             file_path, title, thumb_path = None
             message explains the error / message دلیل خطا رو توضیح می‌ده.
+        cookie_expired: True if yt-dlp reported the cookies as invalid/expired
+        during this call / اگه yt-dlp توی همین فراخوانی کوکی رو نامعتبر تشخیص داد.
     """
     video_id = extract_video_id(url) or "video"
     unique_id = uuid.uuid4().hex[:8]
     output_template = f"{DOWNLOAD_DIR}/{video_id}_{quality}_{unique_id}.%(ext)s"
+    cookie_logger = _CookieWarningLogger()
 
     # --- Format selector / انتخاب فرمت ---
     # One-step download: combines format selection and download in one go
@@ -51,6 +74,7 @@ def download_video(url, quality, progress_hook=None):
         "http_chunk_size": 10 * 1024 * 1024,
         "retries": 10,
         "fragment_retries": 10,
+        "logger": cookie_logger,
     }
 
     # --- Cookie support / پشتیبانی از کوکی ---
@@ -67,7 +91,13 @@ def download_video(url, quality, progress_hook=None):
     if shutil.which("aria2c"):
         ydl_opts["external_downloader"] = "aria2c"
         ydl_opts["external_downloader_args"] = {
-            "aria2c": ["-x", "16", "-s", "16", "-k", "1M"]
+            "aria2c": [
+                "-x", "16", "-s", "16", "-k", "1M",
+                "--lowest-speed-limit=50K",
+                "--max-tries=5",
+                "--retry-wait=2",
+                "--timeout=30",
+            ]
         }
 
     # --- Download / دانلود ---
@@ -81,7 +111,7 @@ def download_video(url, quality, progress_hook=None):
             hint = "\n💡 احتمالا نیاز به کوکی معتبر داری. فایل کوکی رو بررسی و آپدیت کن."
         elif "Requested format is not available" in err:
             hint = "\n💡 این کیفیت برای این ویدیو موجود نیست، کیفیت دیگه‌ای رو امتحان کن."
-        return None, None, None, f"❌ خطا در دانلود / Download error:\n{err}{hint}"
+        return None, None, None, f"❌ خطا در دانلود / Download error:\n{err}{hint}", cookie_logger.cookie_expired
 
     # --- Extract metadata / استخراج متادیتا ---
     title = info.get("title", "video")
@@ -98,13 +128,13 @@ def download_video(url, quality, progress_hook=None):
 
     # --- Validate file / بررسی فایل ---
     if not os.path.exists(final_path):
-        return None, None, None, "❌ فایل پیدا نشد / File not found."
+        return None, None, None, "❌ فایل پیدا نشد / File not found.", cookie_logger.cookie_expired
 
     file_size = os.path.getsize(final_path)
     if file_size < 100 * 1024:
-        return None, None, None, "❌ فایل خیلی کوچیکه (احتمالا ناقص) / File too small (possibly incomplete)."
+        return None, None, None, "❌ فایل خیلی کوچیکه (احتمالا ناقص) / File too small (possibly incomplete).", cookie_logger.cookie_expired
 
     # --- Prepare thumbnail / آماده‌سازی بند انگشتی ---
     thumb_path = prepare_thumbnail(info, video_id, unique_id)
 
-    return final_path, safe_title, thumb_path, "✅ موفق / Success"
+    return final_path, safe_title, thumb_path, "✅ موفق / Success", cookie_logger.cookie_expired

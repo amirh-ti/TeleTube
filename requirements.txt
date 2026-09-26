@@ -4,3 +4,8 @@ yt-dlp[default]>=2026.1.1
 python-dotenv>=1.0
 requests>=2.31
 Pillow>=10.0
+
+# وب‌سرور (لینک مستقیم دانلود + پنل مدیریت)
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9
