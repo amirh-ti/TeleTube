@@ -60,7 +60,7 @@
     <!-- حلقه سمت راست (انرژی تلگرام) -->
     <path d="M 100 155 A 55 55 0 0 0 100 45" fill="none" stroke="url(#tgBlue)" stroke-width="8" stroke-linecap="round" filter="url(#glowBlue)"/>
 
-    <!-- بدنه مرکزی: ترکیب دکمه Play و موشک کاغذی تلگرام -->
+    <!-- بدنه مرکزی: ترکیب دکمه  و موشک کاغذی تلگرام -->
     <path d="M 65 55 L 140 100 L 80 100 Z" fill="url(#glassWhite)" filter="url(#shadow)"/>
     <path d="M 65 145 L 140 100 L 80 100 Z" fill="url(#glassDark)"/>
     
