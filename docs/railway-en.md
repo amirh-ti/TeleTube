@@ -1,24 +1,36 @@
 ### Step-by-Step Deployment
 
-1. **Fork the repository**  
-   Go to the [TeleTube GitHub repository](https://github.com/amirh-ti/TeleTube) and click the **Fork** button to create a copy under your own GitHub account.
+1. **Fork the Repository**
+Head over to the [TeleTube GitHub repository](https://github.com/amirh-ti/TeleTube) and click the **Fork** button to create a copy under your own GitHub account.
+2. **Create a New Project on Railway**
+* Log in to [Railway](https://railway.com).
+* Click **New Project** → **Deploy from GitHub repo**.
+* Select your forked TeleTube repository from the list.
 
-2. **Create a new Railway project**  
-   - Log in to [Railway](https://railway.com).  
-   - Click **New Project** → **Deploy from GitHub repo**.  
-   - Select your forked TeleTube repository from the list.
 
-3. **Configure environment variables**  
-   Railway automatically detects the service and prompts you to add variables. Add **all mandatory variables** from the [Configuration](#️-configuration) section (or copy them from `.env.example`):  
-   - `TELEGRAM_TOKEN`  
-   - `API_ID`  
-   - `API_HASH`  
-   - `SESSION_STRING`  
-   - `TARGET_CHANNEL`  
-   - `TARGET_CHANNEL_USERNAME`  
-   - (Optional) `DOWNLOAD_DIR`, `COOKIES_FILE`, `AUTO_SELECT_TIMEOUT`  
+3. **Configure Environment Variables**
+Railway will automatically detect the service and prompt you to add variables. You can add them using either of the two methods below:
+* **Method 1: Adding variables one by one**
+Go to the **Variables** tab, click **New Variable**, and add each variable individually with its corresponding name and value.
+* **Method 2: Using the Raw Editor**
+Click the **Raw Editor** button in the same tab and paste all your variables at once using the format below:
 
-   > ⚠️ **Important:** Do **not** commit your `.env` file to GitHub. Railway provides a secure **Variables** tab where you can paste these values directly.
 
-4. **Deploy**  
-   Railway will build the container and start the bot automatically. You can monitor the build and runtime logs from the **Deployments** tab.
+```env
+API_HASH="a5a6ab85da5*****ae1731"
+API_ID="299***22"
+COOKIES_B64="IyBOZXRz******IyBUaGlzIGlzIGEgZ2VuZXJhdGVkIGZpbGUhIERvIG5vdCBlZGl0LgoKLnlvdXR1YmUuY29tCVRSVUUJLwlUUlV*****Q3NzYyMQlfX1NlY3VyZS1ST0xMT1VUX1RP*********nTVlwc2FveHRqOWxnTSUzRAo="
+SESSION_STRING="1BJWap1sBuxJgoGdFww01wyaSMnq9G9tBGyhVZWzuEnY**********gW8JdbuVdR_QfAmDCEQ="
+TARGET_CHANNEL="https://t.me/YourChannelID"
+TARGET_CHANNEL_USERNAME="@YourChannelID"
+TELEGRAM_TOKEN="88****33:AAGDRhUo******gKfTpYSvF0k"
+ADMIN_CHAT_ID="7827********781"
+ADMIN_PANEL_PASSWORD="YourPass"
+LINK_TTL_HOURS="24"
+PUBLIC_BASE_URL="https://YourPublicBaseUrl"
+
+```
+
+4. **Redeploy And Enjoy!**
+
+---
