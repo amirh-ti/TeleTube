@@ -95,6 +95,13 @@ bash <(curl -Ls https://raw.githubusercontent.com/amirh-ti/TeleTube/main/uninsta
 
 ---
 
+## 🚂 Deploy on Railway (Alternative)
+
+If you don't want to manage a VPS or configure systemd manually, you can deploy TeleTube directly from your GitHub fork using [Railway](https://railway.com). Railway will build the container, run the bot as an always-on service, and inject your environment variables securely.
+
+> **Note:** Railway containers have **ephemeral filesystems**. Downloaded videos and temporary files will be lost on every redeploy or restart. Uploading to Telegram (via Telethon) completes before the container stops, so this does **not** affect the final delivery of videos. However, if you need persistent local storage for logs or cookies, attach a [Railway Volume](https://docs.railway.com/reference/volumes).
+---
+
 ## ⚙️ Configuration
 
 Project settings are stored in the `/opt/TeleTube/.env` file:
