@@ -107,8 +107,9 @@ bash <(curl -Ls [https://raw.githubusercontent.com/amirh-ti/TeleTube/main/uninst
 
 
 
+⭐️⭐️⭐️[راهنمای استقرار تلتیوب روی ریلوی](railway-fa.md)⭐️⭐️⭐️
 
-**[راهنمای استقرار تلتیوب روی ریلوی](railway-fa.md)**
+
 ---
 ## ⚙️ پیکربندی
 
