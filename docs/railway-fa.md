@@ -32,6 +32,6 @@ PUBLIC_BASE_URL="https://YourPublicBaseUrl"
 
 ```
 
-4. دوباره Deploy کنید و اذت ببرید !
+4. دوباره Deploy کنید و لذت ببرید !
 
 ---
