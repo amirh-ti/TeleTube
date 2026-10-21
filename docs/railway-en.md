@@ -34,3 +34,13 @@ PUBLIC_BASE_URL="https://YourPublicBaseUrl"
 4. **Redeploy And Enjoy!**
 
 ---
+## 🔐 Text to Base64 Converter (for Cookie Encoding)
+
+[Click here to open the Base64 conversion tool](https://amirh-ti.github.io/Base64Kit/)
+
+> 🛡️ **Security Note:** Don't worry about the safety of your data! All conversion operations are performed **entirely locally (client-side)** in your own browser. No data is ever sent to a server, stored, or logged — your information is never kept anywhere.
+
+> 🔍 **Code Transparency:** For your peace of mind, you can review the complete source code of this tool in the repository below:
+>
+> [View source code on GitHub](https://github.com/amirh-ti/Base64Kit/)
+---
